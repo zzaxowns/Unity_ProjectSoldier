@@ -13,6 +13,10 @@ public class GameManager : MonoBehaviour
     public GameObject airSupport_Prefab;
     private GameObject airSupport;
     public GameObject airSupportSpawanPos;
+    //======================총알 날아가는 ============================
+    public GameObject bullet;
+    public GameObject firePos;
+    public GameObject[] bullets = new GameObject[5];
 
 
     public static GameManager instance = null;
@@ -33,6 +37,12 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        for (int i = 0; i < 5; i++)
+        {   // 총알 할당 및 비활성화
+            bullets[i] = Instantiate(bullet, firePos.transform.position, firePos.transform.rotation);
+            bullets[i].SetActive(false);
+        }
+
         gunShootParticle = Instantiate(gunShootParticle_Prefab, gunShootParticlePos.transform.position, gunShootParticlePos.transform.rotation);
         airSupport = Instantiate(airSupport_Prefab, airSupportSpawanPos.transform.position, airSupportSpawanPos.transform.rotation);
     }
@@ -58,6 +68,20 @@ public class GameManager : MonoBehaviour
 
         airSupport.SetActive(true);
        
+    }
+
+    public void fireBullet()
+    {
+        for (int i = 0; i < 5; i++)
+        {
+            if (bullets[i].activeSelf == false)
+            {
+                bullets[i].transform.position = firePos.transform.position;
+                bullets[i].transform.rotation = firePos.transform.rotation;
+                bullets[i].SetActive(true);
+                break;
+            }
+        }
     }
 
 }

@@ -25,7 +25,7 @@ public class CamFPS : MonoBehaviour
         yaw += camSpeed * Input.GetAxis("Mouse X");
         pitch += camSpeed * Input.GetAxis("Mouse Y");
 
-        yaw = Mathf.Clamp(yaw, -150f, -30f);
+        yaw = Mathf.Clamp(yaw, -225f, -90.0f);
         pitch = Mathf.Clamp(pitch, -30f, 10f);
 
         transform.eulerAngles = new Vector3(-pitch, yaw, 0.0f);

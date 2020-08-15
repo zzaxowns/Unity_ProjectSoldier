@@ -35,19 +35,17 @@ public class HandGun : MonoBehaviour
     {
         state = GunShootState.Idle;
         handgunAni = GetComponent<Animator>();
-        handgunAni.SetBool("isShoot", false);
-
+      
         aimType = false;
     
         ray = new Ray(); // Ray 초기화 
 
-        shootDelay = 1.0f; // 총 재발사 딜레이 초기화
+        shootDelay = 0.5f; // 총 재발사 딜레이 초기화
     }
 
     // Update is called once per frame
     void Update()
     {
-        checkAimType();
         checkShooting();
         Debug.DrawRay(ray.origin, ray.direction * ray_Len, Color.red);// Ray를 그려보면서 위치 확인 
     }
@@ -62,6 +60,7 @@ public class HandGun : MonoBehaviour
         {
             //총 쏠 때의 파티클
             GameManager.instance.ShootPaticleOn();
+            //GameManager.instance.fireBullet();
 
             handgunAni.SetBool("isShoot", true); //총 쏘는 애니메이션 변수 true
             //Debug.Log(handgunAni.GetBool("isShoot"));
@@ -83,36 +82,21 @@ public class HandGun : MonoBehaviour
 
                 }
             }
-
-
-
         }
         else if(state == GunShootState.Shoot) {
 
-            shootDelay -= Time.deltaTime;
+            //shootDelay -= Time.deltaTime;
 
-            if (shootDelay<0) {
-                state = GunShootState.Idle;
+            state = GunShootState.Idle;
 
-                handgunAni.SetBool("isShoot", false); // 총 쏘는 애니메이션 변수 false
+            handgunAni.SetBool("isShoot", false); // 총 쏘는 애니메이션 변수 false
 
-            }
+            //if (shootDelay<0) {
+            //    state = GunShootState.Idle;
+
+            //    handgunAni.SetBool("isShoot", false); // 총 쏘는 애니메이션 변수 false
+            //}
         }
-       
+
     }
-
-    void checkAimType() { // 권총을 조준할때 사용되는 함수 
-        if (Input.GetMouseButton(1))
-        {
-            //에임 비활성화 + 권총 정조준 
-            aimType = true;
-           // Debug.Log("권총 정조준");
-        }
-        else {
-            //에임 활성화 + 권총 일반 조준 
-            aimType = false;
-            //Debug.Log("권총 일반 상태");
-        }
-    }
-
 }
