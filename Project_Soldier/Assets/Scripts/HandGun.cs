@@ -40,7 +40,7 @@ public class HandGun : MonoBehaviour
     
         ray = new Ray(); // Ray 초기화 
 
-        shootDelay = 0.5f; // 총 재발사 딜레이 초기화
+        shootDelay = 0.0f; // 총 재발사 딜레이 초기화
     }
 
     // Update is called once per frame
@@ -85,17 +85,19 @@ public class HandGun : MonoBehaviour
         }
         else if(state == GunShootState.Shoot) {
 
-            //shootDelay -= Time.deltaTime;
+            shootDelay -= Time.deltaTime;
 
             state = GunShootState.Idle;
 
             handgunAni.SetBool("isShoot", false); // 총 쏘는 애니메이션 변수 false
 
-            //if (shootDelay<0) {
-            //    state = GunShootState.Idle;
+            if (shootDelay < 0)
+            {
+                shootDelay = 0.7f;
+                state = GunShootState.Idle;
 
-            //    handgunAni.SetBool("isShoot", false); // 총 쏘는 애니메이션 변수 false
-            //}
+                handgunAni.SetBool("isShoot", false); // 총 쏘는 애니메이션 변수 false
+            }
         }
 
     }
